@@ -63,6 +63,14 @@ var aml = new AML("YOUR_API_KEY");
 aml.search("John Smith", "", 0, "US");        // POST /aml
 aml.searchV3("John Smith", "", 10, 1);        // POST /amlv3
 
+// KYB — business verification
+// Verify a business from its registration/incorporation document: extract
+// details, check official company registries, screen against sanctions/PEP,
+// and return directors/owners to verify.
+var kyb = new KYB("YOUR_API_KEY");
+kyb.verify("registration.jpg");                                       // from a document
+kyb.verify("", "ACME CORPORATION", "", "12345678", "", "", "US");     // from known details
+
 // DocuPass — hosted remote verification link
 var docupass = new Docupass("YOUR_API_KEY");
 var link = docupass.createDocupass("YOUR_PROFILE_ID");
@@ -78,6 +86,7 @@ The SDK wraps the complete ID Analyzer API v2 surface:
 | `Scanner` | `scan`, `quickScan`, `veryQuickScan` |
 | `Biometric` | `verifyFace`, `verifyLiveness` |
 | `AML` | `search` (`/aml`), `searchV3` (`/amlv3`) |
+| `KYB` | `verify` (`/kyb`) |
 | `Contract` | `generate` + template CRUD |
 | `Transaction` | `getTransaction`, `listTransaction`, `updateTransaction`, `deleteTransaction`, `exportTransaction`, `saveImage`, `saveFile` |
 | `Docupass` | `createDocupass`, `listDocupass`, `getDocupass`, `deleteDocupass` |
