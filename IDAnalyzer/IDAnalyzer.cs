@@ -1645,41 +1645,27 @@ namespace IDAnalyzer
         }
 
         /// <summary>
-        /// Verify a business. Provide a registration/incorporation document and/or known
-        /// business identifiers; the service extracts the company details, checks official
-        /// company registries, screens against sanctions/PEP watchlists, and returns
-        /// directors and owners to verify.
+        /// Verify a business from its registration/incorporation document. A document is
+        /// required; an optional profile selects the KYC profile. The service extracts the
+        /// company details, checks official company registries, screens against sanctions/PEP
+        /// watchlists, and returns directors and owners to verify.
         /// </summary>
-        /// <param name="document">Registration/incorporation document (file path, raw base64, URL, or data URL)</param>
-        /// <param name="legalName">Registered legal name of the business</param>
-        /// <param name="legalNameLocal">Registered legal name in the local language/script</param>
-        /// <param name="registrationNumber">Company registration / incorporation number</param>
-        /// <param name="taxNumber">Business tax number</param>
-        /// <param name="lei">Legal Entity Identifier (LEI)</param>
-        /// <param name="country">Two-letter ISO country code where the business is registered</param>
-        /// <param name="state">State/province where the business is registered</param>
-        /// <param name="entityType">Business entity type</param>
+        /// <param name="document">Registration/incorporation document (file path, raw base64, URL, or data URL). Required.</param>
+        /// <param name="profile">KYC profile ID to apply to the verification. Optional.</param>
         /// <returns>The API response as a <see cref="JObject"/>.</returns>
-        /// <exception cref="InvalidArgumentException">Thrown when none of 'document', 'legalName' or 'registrationNumber' is provided.</exception>
-        public JObject verify(string document = "", string legalName = "", string legalNameLocal = "",
-            string registrationNumber = "", string taxNumber = "", string lei = "",
-            string country = "", string state = "", string entityType = "")
+        /// <exception cref="InvalidArgumentException">Thrown when 'document' is null or empty.</exception>
+        public JObject verify(string document, string? profile = null)
         {
-            if (document == "" && legalName == "" && registrationNumber == "")
+            if (string.IsNullOrEmpty(document))
             {
-                throw new InvalidArgumentException("Provide a document, or legalName/registrationNumber.");
+                throw new InvalidArgumentException("A business document (image or PDF) is required.");
             }
 
-            var payload = new Hashtable() { };
-            if (document != "") payload["document"] = Common.ParseInput(document, true);
-            if (legalName != "") payload["legalName"] = legalName;
-            if (legalNameLocal != "") payload["legalNameLocal"] = legalNameLocal;
-            if (registrationNumber != "") payload["registrationNumber"] = registrationNumber;
-            if (taxNumber != "") payload["taxNumber"] = taxNumber;
-            if (lei != "") payload["lei"] = lei;
-            if (entityType != "") payload["entityType"] = entityType;
-            if (country != "") payload["countryIso2"] = country;
-            if (state != "") payload["state"] = state;
+            var payload = new Hashtable()
+            {
+                ["document"] = Common.ParseInput(document, true)
+            };
+            if (!string.IsNullOrEmpty(profile)) payload["profile"] = profile;
 
             var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
             // KYB is heavier than a scan, allow up to 120 seconds for the response.
