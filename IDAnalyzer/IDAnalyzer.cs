@@ -1629,6 +1629,67 @@ namespace IDAnalyzer
     }
 
     /// <summary>
+    /// Client for KYB (Know Your Business) verification. Verifies a business from its
+    /// registration/incorporation document: extracts the company details, checks
+    /// official company registries, screens against sanctions/PEP watchlists, and
+    /// returns directors and owners to verify.
+    /// </summary>
+    public class KYB : ApiParent
+    {
+        /// <summary>
+        /// Initialize the KYB client.
+        /// </summary>
+        /// <param name="apiKey">Your API key. If null, the IDANALYZER_KEY environment variable is used.</param>
+        public KYB(string? apiKey = null) : base(apiKey)
+        {
+        }
+
+        /// <summary>
+        /// Verify a business. Provide a registration/incorporation document and/or known
+        /// business identifiers; the service extracts the company details, checks official
+        /// company registries, screens against sanctions/PEP watchlists, and returns
+        /// directors and owners to verify.
+        /// </summary>
+        /// <param name="document">Registration/incorporation document (file path, raw base64, URL, or data URL)</param>
+        /// <param name="legalName">Registered legal name of the business</param>
+        /// <param name="legalNameLocal">Registered legal name in the local language/script</param>
+        /// <param name="registrationNumber">Company registration / incorporation number</param>
+        /// <param name="taxNumber">Business tax number</param>
+        /// <param name="lei">Legal Entity Identifier (LEI)</param>
+        /// <param name="country">Two-letter ISO country code where the business is registered</param>
+        /// <param name="state">State/province where the business is registered</param>
+        /// <param name="entityType">Business entity type</param>
+        /// <returns>The API response as a <see cref="JObject"/>.</returns>
+        /// <exception cref="InvalidArgumentException">Thrown when none of 'document', 'legalName' or 'registrationNumber' is provided.</exception>
+        public JObject verify(string document = "", string legalName = "", string legalNameLocal = "",
+            string registrationNumber = "", string taxNumber = "", string lei = "",
+            string country = "", string state = "", string entityType = "")
+        {
+            if (document == "" && legalName == "" && registrationNumber == "")
+            {
+                throw new InvalidArgumentException("Provide a document, or legalName/registrationNumber.");
+            }
+
+            var payload = new Hashtable() { };
+            if (document != "") payload["document"] = Common.ParseInput(document, true);
+            if (legalName != "") payload["legalName"] = legalName;
+            if (legalNameLocal != "") payload["legalNameLocal"] = legalNameLocal;
+            if (registrationNumber != "") payload["registrationNumber"] = registrationNumber;
+            if (taxNumber != "") payload["taxNumber"] = taxNumber;
+            if (lei != "") payload["lei"] = lei;
+            if (entityType != "") payload["entityType"] = entityType;
+            if (country != "") payload["countryIso2"] = country;
+            if (state != "") payload["state"] = state;
+
+            var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
+            // KYB is heavier than a scan, allow up to 120 seconds for the response.
+            using var cts = new System.Threading.CancellationTokenSource(TimeSpan.FromSeconds(120));
+            var resp = this.sess.PostAsync(Common.GetEndpoint("kyb"), content, cts.Token).Result;
+            return Common.ApiExceptionHandle(resp, this.throwError);
+        }
+    }
+
+    /// <summary>
     /// Client for managing stored KYC profiles: list, get, create, update, delete and export.
     /// </summary>
     public class ProfileAPI : ApiParent

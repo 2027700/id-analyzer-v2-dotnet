@@ -32,7 +32,7 @@ Console.WriteLine(result);
 
 ## Coverage
 `Scanner` (scan / quickScan / veryQuickScan), `Biometric` (verifyFace / verifyLiveness),
-`AML` (search / searchV3), `Contract` (generate + template CRUD), `Transaction`
+`AML` (search / searchV3), `KYB` (verify), `Contract` (generate + template CRUD), `Transaction`
 (get / list / update / delete / export / saveImage / saveFile), `Docupass`
 (create / list / get / delete), `ProfileAPI` (KYC profile CRUD + export), `Webhook`
 (list / resend / delete), `Account` (getAccount).
