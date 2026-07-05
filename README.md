@@ -1,24 +1,23 @@
-# ID Analyzer .NET SDK — Identity Verification, KYC, Document & Biometric API
+李冬
+[![NuGet版本](https://img.shields.io/nuget/v/IDAnalyzerV2.svg)](https://www.nuget.org/packages/IDAnalyzerV2)
+[![Nu Get下载](https://img.shields.io/nuget/dt/IDAnalyzerV2.svg)](https://www.nuget.org/packages/IDAnalyzerV2)
+[![许可证](https://img.shields.io/badge/license-MIT-blue.svg)](许可证)
 
-[![NuGet version](https://img.shields.io/nuget/v/IDAnalyzerV2.svg)](https://www.nuget.org/packages/IDAnalyzerV2)
-[![NuGet downloads](https://img.shields.io/nuget/dt/IDAnalyzerV2.svg)](https://www.nuget.org/packages/IDAnalyzerV2)
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+官方的.NET/C#客户端库**[身份证（ID）分析器](https://www.idanalyzer.com)A pi v2**–在几分钟内实现身份证件验证、KYC入职和生物识别检查的自动化。
 
-Official .NET / C# client library for the **[ID Analyzer](https://www.idanalyzer.com) API v2** — automate identity document verification, KYC onboarding and biometric checks in minutes.
+扫描并验证**护照、驾照、身份证、签证和居留许可，来自190多个国家**，跑步**1:1面部匹配和活力检测**，屏幕对准**反洗钱/PEP/制裁**监视列表和远程运行的机载用户**DocuPass**托管验证和电子签名。
 
-Scan and authenticate **passports, driver's licenses, ID cards, visas and residence permits from 190+ countries**, run **1:1 face match and liveness detection**, screen against **AML / PEP / sanctions** watchlists, and onboard users remotely with **DocuPass** hosted verification & e-signature.
+- 🌐 **网址:** [www.idanalyzer.com](https://www.idanalyzer.com)
+- 📚 **开发人员文档和应用程序接口参考资料：** [developer.idanalyzer.com](https://developer.idanalyzer.com/help)
+- 📖 **完整SDK类引用（自动生成）:** [https://idanalyzer.github.io/id-analyzer-v2-dotnet/](https://idanalyzer.github.io/id-analyzer-v2-dotnet/)
+- 🔑 **获取您的API密钥:** [portal2.id分析器.com](https://portal2.idanalyzer.com)
+- 💬 **支持:** support@idanalyzer.com
 
-- 🌐 **Website:** [www.idanalyzer.com](https://www.idanalyzer.com)
-- 📚 **Developer docs & API reference:** [developer.idanalyzer.com](https://developer.idanalyzer.com/help)
-- 📖 **Full SDK class reference (auto-generated):** [https://idanalyzer.github.io/id-analyzer-v2-dotnet/](https://idanalyzer.github.io/id-analyzer-v2-dotnet/)
-- 🔑 **Get your API key:** [portal2.idanalyzer.com](https://portal2.idanalyzer.com)
-- 💬 **Support:** support@idanalyzer.com
+##特点
 
-## Features
-
-- **Document OCR & authentication** — passport, driver's license, ID card, visa & residence-permit recognition from 190+ countries, including MRZ and PDF417 / AAMVA barcode parsing.
-- **Biometric verification** — 1:1 face match and liveness / presentation-attack detection.
-- **AML screening** — PEP, sanctions, watchlist and adverse-media checks.
+- **文档OCR与认证**—来自190多个国家的护照、驾照、身份证、签证和居留许可识别，包括MRZ和PDF417/AAMVA条形码解析。
+- **生物特征验证**—1:1面部匹配和生气/表现-攻击检测。
+- **急性淋巴细胞白血病筛查**—人防、制裁、观察名单和负面媒体检查。
 - **DocuPass** — hosted, no-code remote identity verification, KYC/AML onboarding and legally-binding e-signature.
 - **KYC profiles, transaction vault, contract generation and webhooks.**
 - **US & EU data-residency regions.**
